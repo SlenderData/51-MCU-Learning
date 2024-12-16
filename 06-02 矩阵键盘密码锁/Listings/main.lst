@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 05:51:29 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 06:14:26 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -16,7 +16,7 @@ line level    source
    6          unsigned char KeyNum;  // 当前矩阵键盘按键
    7          unsigned char Password[16];  // 与课程视频不同的数组实现，不受密码位数限制
    8          unsigned char *PasswordPtr = Password;  // 指向当前输入的密码位的指针
-   9          unsigned char CorrectPassword[] = {1, 1, 4, 5, 1, 4};  // 正确密码
+   9          unsigned char CorrectPassword[] = "1145141919810";  // 正确密码
   10          unsigned char i;  // 用于循环
   11          
   12          // 密码输入，成功返回 1，失败返回 0
@@ -25,7 +25,7 @@ line level    source
   15          {
   16   1              if(InputNum > 10) return 0;  // 大于 10 时均为非数字输入
   17   1              if(PasswordPtr >= Password + 16) return 0;  // 超出LCD显示范围
-  18   1              *PasswordPtr = InputNum;
+  18   1              *PasswordPtr = (InputNum == 10) ? 0 : InputNum;  // 按键 10 代表 0
   19   1              PasswordPtr++;
   20   1              LCD_ShowString(2, 1, "                ");  // 清空密码显示
   21   1              for(i = 0; i < PasswordPtr - Password; i++)  // 显示密码
@@ -53,16 +53,16 @@ line level    source
   43          unsigned char CheckPassword(unsigned char InputKey)
   44          {
   45   1              if(InputKey != 11) return 0;  // 非确认键
-  46   1              if((PasswordPtr - Password) != sizeof(CorrectPassword))  // 密码位数不符
+  46   1              if((PasswordPtr - Password) != (sizeof(CorrectPassword) - 1))  // 密码位数不符
   47   1              {
   48   2                      LCD_ShowString(2, 1, "                ");  // 清空密码显示
   49   2                      LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
   50   2                      return 1;
   51   2              }
-  52   1              for(i = 0; i < sizeof(CorrectPassword); i++)
+  52   1              for(i = 0; i < sizeof(CorrectPassword) - 1; i++)
   53   1              {
-  54   2                      if(Password[i] != CorrectPassword[i])  // 密码错误
-C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 05:51:29 PAGE 2   
+  54   2                      if(Password[i] != (CorrectPassword[i] - '0'))  // 密码错误
+C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 06:14:26 PAGE 2   
 
   55   2                      {
   56   3                              LCD_ShowString(2, 1, "                ");  // 清空密码显示
@@ -94,11 +94,11 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    376    ----
+   CODE SIZE        =    385    ----
    CONSTANT SIZE    =     43    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =     27    ----
+   DATA SIZE        =     35    ----
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
