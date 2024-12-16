@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 03:51:11 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 05:51:29 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -13,82 +13,95 @@ line level    source
    3          #include "LCD1602.h"
    4          #include "MatrixKey.h"
    5          
-   6          unsigned char KeyNum;
+   6          unsigned char KeyNum;  // 当前矩阵键盘按键
    7          unsigned char Password[16];  // 与课程视频不同的数组实现，不受密码位数限制
    8          unsigned char *PasswordPtr = Password;  // 指向当前输入的密码位的指针
-   9          unsigned char CorrectPassword[] = "114514";  // 正确密码
-  10          
-  11          // 密码输入，成功返回 true，失败返回 false
-  12          bool AddPassword(unsigned char InputNum)
-*** ERROR C129 IN LINE 12 OF main.c: missing ';' before 'AddPassword'
-  13          {
-  14                  if(InputNum > 10) return false;  // 大于 10 时均为非数字输入
-  15                  if(PasswordPtr >= Password + 16) return false;  // 超出LCD显示范围
-  16                  *PasswordPtr = InputNum;
-  17                  PasswordPtr++;
-  18                  LCD_ShowString(2, 1, "                ");  // 清空密码显示
-  19              for(unsigned char i = 0; i < PasswordPtr - Password; i++)  // 显示密码
-  20                  {
-  21                          LCD_ShowNum(2, 1 + i, Password[i], 1);
-  22                  }
-  23                  return true;
-  24          }
-  25          
-  26          // 退格，成功返回 true，失败返回 false
-  27          bool Backspace(unsigned char InputKey)
-  28          {
-  29                  if(InputKey != 12) return false;  // 非退格键
-  30                  if(PasswordPtr == Password) return false;  // 无密码可退格
-  31                  PasswordPtr--;
-  32                  LCD_ShowString(2, 1, "                ");  // 清空密码显示
-  33                  for(unsigned char i = 0; i < PasswordPtr - Password; i++)  // 显示密码
-  34                  {
-  35                          LCD_ShowNum(2, 1 + i, Password[i], 1);
-  36                  }
-  37                  return true;
-  38          }
-  39          
-  40          // 检查密码是否正确，成功检查返回 true，失败返回 false
-  41          bool CheckPassword(unsigned char InputKey)
-  42          {
-  43                  if(InputKey != 11) return false;  // 非确认键
-  44                  if(PasswordPtr - Password != sizeof(CorrectPassword) - 1)  // 密码位数不符
-  45                  {
-  46                          LCD_ShowString(2, 1, "                ");  // 清空密码显示
-  47                          LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
-  48                          return true;
-  49                  }
-  50                  for(unsigned char i = 0; i < sizeof(CorrectPassword) - 1; i++)
-  51                  {
-  52                          if(Password[i] != CorrectPassword[i])  // 密码错误
-  53                          {
-C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 03:51:11 PAGE 2   
+   9          unsigned char CorrectPassword[] = {1, 1, 4, 5, 1, 4};  // 正确密码
+  10          unsigned char i;  // 用于循环
+  11          
+  12          // 密码输入，成功返回 1，失败返回 0
+  13          // 不可以使用 bool 类型，编译器不支持
+  14          unsigned char AddPassword(unsigned char InputNum)
+  15          {
+  16   1              if(InputNum > 10) return 0;  // 大于 10 时均为非数字输入
+  17   1              if(PasswordPtr >= Password + 16) return 0;  // 超出LCD显示范围
+  18   1              *PasswordPtr = InputNum;
+  19   1              PasswordPtr++;
+  20   1              LCD_ShowString(2, 1, "                ");  // 清空密码显示
+  21   1              for(i = 0; i < PasswordPtr - Password; i++)  // 显示密码
+  22   1              {
+  23   2                      LCD_ShowNum(2, 1 + i, Password[i], 1);
+  24   2              }
+  25   1              return 1;
+  26   1      }
+  27          
+  28          // 退格，成功返回 1，失败返回 0
+  29          unsigned char Backspace(unsigned char InputKey)
+  30          {
+  31   1              if(InputKey != 12) return 0;  // 非退格键
+  32   1              if(PasswordPtr == Password) return 0;  // 无密码可退格
+  33   1              PasswordPtr--;
+  34   1              LCD_ShowString(2, 1, "                ");  // 清空密码显示
+  35   1              for(i = 0; i < PasswordPtr - Password; i++)  // 显示密码
+  36   1              {
+  37   2                      LCD_ShowNum(2, 1 + i, Password[i], 1);
+  38   2              }
+  39   1              return 1;
+  40   1      }
+  41          
+  42          // 检查密码是否正确，成功检查返回 1，失败返回 0
+  43          unsigned char CheckPassword(unsigned char InputKey)
+  44          {
+  45   1              if(InputKey != 11) return 0;  // 非确认键
+  46   1              if((PasswordPtr - Password) != sizeof(CorrectPassword))  // 密码位数不符
+  47   1              {
+  48   2                      LCD_ShowString(2, 1, "                ");  // 清空密码显示
+  49   2                      LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
+  50   2                      return 1;
+  51   2              }
+  52   1              for(i = 0; i < sizeof(CorrectPassword); i++)
+  53   1              {
+  54   2                      if(Password[i] != CorrectPassword[i])  // 密码错误
+C51 COMPILER V9.60.7.0   MAIN                                                              12/17/2024 05:51:29 PAGE 2   
 
-  54                                  LCD_ShowString(2, 1, "                ");  // 清空密码显示
-  55                                  LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
-  56                                  return true;
-  57                          }
-  58                  }
-  59                  LCD_ShowString(2, 1, "                ");  // 清空密码显示
-  60                  LCD_ShowString(2, 1, "Correct!");  // 显示密码正确提示
-  61                  return true;
-  62          }
-  63          
-  64          // 主函数
-  65          void main()
-  66          {
-  67                  LCD_Init();
-  68                  LCD_ShowString(1, 1, "Password:");
-  69                  while(1)
-  70                  {
-  71                          KeyNum = MatrixKey();
-  72                          if(KeyNum)
-  73                          {
-  74                                  if(AddPassword(KeyNum)) continue;
-  75                                  if(Backspace(KeyNum)) continue;
-  76                                  if(CheckPassword(KeyNum));
-  77                          }
-  78                  }
-  79          }
+  55   2                      {
+  56   3                              LCD_ShowString(2, 1, "                ");  // 清空密码显示
+  57   3                              LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
+  58   3                              return 1;
+  59   3                      }
+  60   2              }
+  61   1              LCD_ShowString(2, 1, "                ");  // 清空密码显示
+  62   1              LCD_ShowString(2, 1, "Correct!");  // 显示密码正确提示
+  63   1              return 1;
+  64   1      }
+  65          
+  66          // 主函数
+  67          void main()
+  68          {
+  69   1              LCD_Init();
+  70   1              LCD_ShowString(1, 1, "Password:");
+  71   1              while(1)
+  72   1              {
+  73   2                      KeyNum = MatrixKey();
+  74   2                      if(KeyNum)
+  75   2                      {
+  76   3                              if(AddPassword(KeyNum)) continue;
+  77   3                              if(Backspace(KeyNum)) continue;
+  78   3                              if(CheckPassword(KeyNum));
+  79   3                      }
+  80   2              }
+  81   1      }
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  1 ERROR(S)
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    376    ----
+   CONSTANT SIZE    =     43    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     27    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
