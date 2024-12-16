@@ -1,0 +1,37 @@
+C51 COMPILER V9.60.7.0   DIGITALDISPLAY                                                    12/13/2024 23:02:16 PAGE 1   
+
+
+C51 COMPILER V9.60.7.0, COMPILATION OF MODULE DIGITALDISPLAY
+OBJECT MODULE PLACED IN .\Objects\DigitalDisplay.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE DigitalDisplay.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Lis
+                    -tings\DigitalDisplay.lst) TABS(2) OBJECT(.\Objects\DigitalDisplay.obj)
+
+line level    source
+
+   1          #include <REGX52.H>
+   2          #include "Delay.h"
+   3          
+   4          unsigned char NumTable[] = {0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 0x7F, 0x6F, 0x00};
+   5          
+   6          void DigitalDisplay(unsigned char Location, Number, Dot)
+   7          {
+   8   1        if(Location > 7 || Number > 10) return;
+   9   1        P2 = ~(4 * Location);
+  10   1        P0 = NumTable[Number];
+  11   1        if(Dot) P0 += 0x80;
+  12   1        Delay(1);
+  13   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     49    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     11    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

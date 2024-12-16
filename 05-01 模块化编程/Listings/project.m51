@@ -1,0 +1,134 @@
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                    12/13/2024  23:02:16  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22.4.0, INVOKED BY:
+C:\KEIL_V5\C51\BIN\BL51.EXE .\Objects\main.obj, .\Objects\Delay.obj, .\Objects\DigitalDisplay.obj TO .\Objects\project P
+>> RINT (.\Listings\project.m51) RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  .\Objects\main.obj (MAIN)
+  .\Objects\Delay.obj (DELAY)
+  .\Objects\DigitalDisplay.obj (DIGITALDISPLAY)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_STARTUP)
+  C:\KEIL_V5\C51\LIB\C51S.LIB (?C_INIT)
+
+
+LINK MAP OF MODULE:  .\Objects\project (MAIN)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     000BH     UNIT         ?DT?DIGITALDISPLAY
+            IDATA   0013H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     008CH     UNIT         ?C_C51STARTUP
+            CODE    008FH     0045H     UNIT         ?PR?MAIN?MAIN
+            CODE    00D4H     0031H     UNIT         ?PR?_DIGITALDISPLAY?DIGITALDISPLAY
+            CODE    0105H     0016H     UNIT         ?PR?_DELAY?DELAY
+            CODE    011BH     000EH     UNIT         ?C_INITSEG
+
+
+
+OVERLAY MAP OF MODULE:   .\Objects\project (MAIN)
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?MAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?MAIN
+  +--> ?PR?_DIGITALDISPLAY?DIGITALDISPLAY
+
+?PR?_DIGITALDISPLAY?DIGITALDISPLAY
+  +--> ?PR?_DELAY?DELAY
+
+
+
+SYMBOL TABLE OF MODULE:  .\Objects\project (MAIN)
+
+  VALUE           TYPE          NAME
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/13/2024  23:02:16  PAGE 2
+
+
+  ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:008FH         PUBLIC        main
+  -------         PROC          MAIN
+  C:008FH         LINE#         3
+  C:008FH         LINE#         4
+  C:008FH         LINE#         5
+  C:008FH         LINE#         6
+  C:008FH         LINE#         7
+  C:0099H         LINE#         8
+  C:00A4H         LINE#         9
+  C:00B1H         LINE#         10
+  C:00BCH         LINE#         11
+  C:00C7H         LINE#         12
+  C:00D2H         LINE#         13
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        MAIN
+
+  -------         MODULE        DELAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0105H         PUBLIC        _Delay
+  -------         PROC          _DELAY
+  D:0006H         SYMBOL        xms
+  -------         DO            
+  D:0005H         SYMBOL        i
+  D:0004H         SYMBOL        j
+  -------         ENDDO         
+  C:0105H         LINE#         3
+  C:0105H         LINE#         4
+  C:0105H         LINE#         6
+  C:010FH         LINE#         7
+  C:010FH         LINE#         8
+  C:0110H         LINE#         9
+  C:0112H         LINE#         10
+  C:0114H         LINE#         12
+  C:0114H         LINE#         13
+  C:0116H         LINE#         14
+  C:0118H         LINE#         15
+  C:011AH         LINE#         16
+  -------         ENDPROC       _DELAY
+  -------         ENDMOD        DELAY
+
+  -------         MODULE        DIGITALDISPLAY
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:00A0H         PUBLIC        P2
+  D:0008H         PUBLIC        NumTable
+  C:00D4H         PUBLIC        _DigitalDisplay
+  -------         PROC          _DIGITALDISPLAY
+  D:0007H         SYMBOL        Location
+  D:0004H         SYMBOL        Number
+  D:0002H         SYMBOL        Dot
+  C:00D4H         LINE#         6
+  C:00D4H         LINE#         7
+  C:00D4H         LINE#         8
+BL51 BANKED LINKER/LOCATER V6.22.4.0                                                  12/13/2024  23:02:16  PAGE 3
+
+
+  C:00E4H         LINE#         9
+  C:00ECH         LINE#         10
+  C:00F3H         LINE#         11
+  C:00FDH         LINE#         12
+  C:0104H         LINE#         13
+  -------         ENDPROC       _DIGITALDISPLAY
+  -------         ENDMOD        DIGITALDISPLAY
+
+Program Size: data=20.0 xdata=0 code=297
+LINK/LOCATE RUN COMPLETE.  0 WARNING(S),  0 ERROR(S)
