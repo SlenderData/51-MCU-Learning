@@ -45,21 +45,18 @@ unsigned char CheckPassword(unsigned char InputKey)
 	if(InputKey != 11) return 0;  // 非确认键
 	if((PasswordPtr - Password) != (sizeof(CorrectPassword) - 1))  // 密码位数不符
 	{
-		LCD_ShowString(2, 1, "                ");  // 清空密码显示
-		LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
+		LCD_ShowString(1, 10, "  Wrong");  // 显示密码错误提示
 		return 1;
 	}
 	for(i = 0; i < sizeof(CorrectPassword) - 1; i++)
 	{
 		if(Password[i] != (CorrectPassword[i] - '0'))  // 密码错误
 		{
-			LCD_ShowString(2, 1, "                ");  // 清空密码显示
-			LCD_ShowString(2, 1, "Wrong!");  // 显示密码错误提示
+			LCD_ShowString(1, 10, "  Wrong");  // 显示密码错误提示
 			return 1;
 		}
 	}
-	LCD_ShowString(2, 1, "                ");  // 清空密码显示
-	LCD_ShowString(2, 1, "Correct!");  // 显示密码正确提示
+	LCD_ShowString(1, 10, "Correct");  // 显示密码正确提示
 	return 1;
 }
 
